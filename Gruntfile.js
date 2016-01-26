@@ -18,7 +18,12 @@ module.exports = function(grunt) {
 				src: ['build/**/*.css', 'build/**/*.less', '!build/**/main.css']
 			},
 			scripts: {
-				src: ['build/**/*.js', '!build/**/app.js']
+				src: [
+					'build/**/*.js',
+					// Ignore
+					'!build/**/app.js', 
+					'!build/**/vendor.js'
+				]
 			}
 		},
 
@@ -56,7 +61,11 @@ module.exports = function(grunt) {
 					// mangle: false
 				},
 				files: {
-					'build/assets/js/app.js': ['src/assets/**/*.js']
+					'build/assets/js/app.js': ['src/assets/**/*.js'],
+					'build/assets/js/vendor.js': [
+						// Vendor dependencies
+						'node_modules/angular/angular.js'
+					]
 				}
 			}
 		},
