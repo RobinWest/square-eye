@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 					// mangle: false
 				},
 				files: {
-					'build/assets/js/app.js': ['src/assets/**/*.js'],
+					'build/assets/js/app.js': ['src/assets/**/**.js'],
 					'build/assets/js/vendor.js': [
 						// Vendor dependencies
 						'node_modules/angular/angular.js'
@@ -86,6 +86,7 @@ module.exports = function(grunt) {
 		}
 	});
 
+	// TODO add angular auto-dependency injector
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-less');
