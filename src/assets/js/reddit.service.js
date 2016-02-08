@@ -2,12 +2,20 @@
 
 angular
 	.module('SquareEye')
-	.service('videoService', ['$q', '$http', function($q, $http){
-		var thing = {
-			prop: 1,
-			prop: 2
+	.service('videoService', function($q, $http){
+		// TODO remove protocol
+		var baseUrl = 'https://api.reddit.com/r/videos';
+
+		var api = {
+			get: function(args){
+				var args = args || {};
+
+				return $http.get(baseUrl, {
+					params: args
+				});
+			}
 		};
 
-		return thing;
-	}])
+		return api;
+	})
 ;
