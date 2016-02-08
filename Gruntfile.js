@@ -4,10 +4,14 @@ module.exports = function(grunt) {
 		copy: {
 			build: {
 				cwd: 'src',
-				src: [ '**' ],
+				src: [
+					'**',
+					'!**/*.js',
+					'!**/*.css'
+				],
 				dest: 'build',
 				expand: true
-			},
+			}
 		},
 
 		clean: {
@@ -20,9 +24,11 @@ module.exports = function(grunt) {
 			scripts: {
 				src: [
 					'build/**/*.js',
+					'build/min-safe',
 					// Ignore
-					'!build/**/app.js', 
-					'!build/**/vendor.js'
+					// '!build/**/app.js', 
+					// '!build/**/vendor.js'
+					'!build/assets/**/*.js'
 				]
 			}
 		},
@@ -61,8 +67,20 @@ module.exports = function(grunt) {
 					// mangle: false
 				},
 				files: {
-					'build/assets/js/app.js': ['src/assets/**/**.js'],
-					'build/assets/js/vendor.js': [
+					'build/assets/js/app.js': ['build/min-safe/**/**.js', '!build/min-safe/js/vendor.js'],
+					'build/assets/js/vendor.js': ['build/min-safe/js/vendor.js']
+				}
+			}
+		},
+
+		ngAnnotate: {
+			options: {
+				singleQuotes: true
+			},
+			app: {
+				files: {
+					'build/min-safe/js/app.js': ['src/assets/**/**.js'],
+					'build/min-safe/js/vendor.js': [
 						// Vendor dependencies
 						'node_modules/angular/angular.js'
 					]
@@ -79,6 +97,7 @@ module.exports = function(grunt) {
 				files: 'src/assets/**/*.js',
 				tasks: ['scripts']
 			},
+			// Copies any index/html files over
 			copy: {
 				files: ['src/**', '!src/**/*.less', '!src/**/*.js'],
 				tasks: ['copy']
@@ -92,7 +111,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-ng-annotate');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-ng-annotate');
 
 	// unconfigured
 	// grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -117,7 +138,7 @@ module.exports = function(grunt) {
 	grunt.registerTask(
 		'scripts',
 		'Combine and uglify scripts.',
-		['uglify', 'clean:scripts']
+		['ngAnnotate', 'uglify', 'clean:scripts']
 	);
 
 	grunt.registerTask(
