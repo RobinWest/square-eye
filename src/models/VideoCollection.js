@@ -1,5 +1,7 @@
 // import React, { Component } from 'react';
 
+// import urlParser from 'js-video-url-parser';
+
 import Collection from './Collection';
 import Model from './VideoModel';
 
@@ -17,13 +19,15 @@ class VideoCollection extends Collection {
 		if(!data.length)
 			throw new Error('Wrong type provided to collection: ', typeof data);
 
-		// if(data instanceof RotaStaffCollection)
-		// 	return this.collection = data.collection;
+		console.log(data);
 
 		for(var i = 0; i < data.length; i++){
-			var model = new Model(data[i].data);
+			var dataItem  = data[i].data,
+				model     = new Model(dataItem);
 
-			this.add(model);
+			// Kick out any models that haven't got a provider set
+			if(model.provider)
+				this.add(model);
 		}
 
 		return this;

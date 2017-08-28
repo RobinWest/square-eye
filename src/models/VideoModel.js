@@ -1,5 +1,6 @@
 // import React, { Component } from 'react';
 
+import urlParser from 'js-video-url-parser';
 import Model from './Model';
 
 class VideoModel extends Model{
@@ -12,6 +13,7 @@ class VideoModel extends Model{
 		this.created      = 0;
 		this.subreddit    = '';
 		this.domain       = '';
+		this.provider     = false;
 		this.thumbnail    = '';
 		this.permalink    = '';
 		this.url          = '';
@@ -34,25 +36,14 @@ class VideoModel extends Model{
 			switch(key){
 				// Convert YT url into an embedable url
 				case 'url':
-						var source = data[key];
+					var sourceUrl = data['url'],
+						parsedUrl = urlParser.parse(sourceUrl);
 
-						// TODO this needs to process a YT url into a YT video ID
-						var videoSplit = source.split('v='),
-							videoId = videoSplit[1];
-
-						if(videoSplit.length === 1)
-							videoSplit = source.split('youtu.be/');
-
-						if(videoSplit.length > 1)
-							videoId = videoSplit[1];
-
-
-						console.log(source.split('v='));
-						console.log(source.split('youtu.be/'));
-						console.log(videoId);
-						console.log('-------');
-
-						this[key] = 'https://www.youtube.com/embed/' + videoId + '?autoplay=0&origin=http://squareeye'
+					if(parsedUrl && parsedUrl.provider === 'youtube'){
+						console.log('+++++++++++++++++++++', parsedUrl);
+						this['provider'] = parsedUrl.provider;
+						this[key]        = 'https://www.youtube.com/embed/' + parsedUrl.id + '?autoplay=0&origin=http://squareeye'
+					}
 
 					break;
 

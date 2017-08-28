@@ -31,12 +31,15 @@ class App extends Component {
 				var videoCollection = new VideoCollection(response.data.children),
 					firstVideo      = videoCollection.collection[0];
 
+				console.log('+++++');
+				console.log(videoCollection);
+				console.log(firstVideo);
+				console.log('+++++');
+
 				this.setState({
 					video: firstVideo,
 					playlist: videoCollection
 				});
-
-				console.log(this.state.playlist);
 			})
 			.catch((err) => {
 				console.log(err);

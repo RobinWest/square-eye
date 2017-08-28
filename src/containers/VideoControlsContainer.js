@@ -14,14 +14,8 @@ class VideoControlsContainer extends Component {
 	}
 
 	selectVideo(event, offset){
-		console.log(event);
-		console.log(offset);
-
 		var videoCollection = this.props.videoCollection.collection,
 			selectedIndex = videoCollection.indexOf(this.props.videoModel);
-
-		console.log(videoCollection);
-		console.log(selectedIndex);
 
 		var newIndex = selectedIndex + offset;
 

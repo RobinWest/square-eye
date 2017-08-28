@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 
-// import './App.css';
+import PlaylistItem from '../components/PlaylistItem';
+import '../css/Playlist.css';
+
 
 class PlaylistContainer extends Component {
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
+
+		console.log(props);
 
 		// this.setActiveArrow = this.setActiveArrow.bind(this);
 
@@ -16,6 +20,9 @@ class PlaylistContainer extends Component {
 		return (
 			<div className="playlist-container">
 				<p>playlist container</p>
+				{this.props.videoCollection.collection.map(function(videoModel, index){
+					return <PlaylistItem key={'playlist-item-' + index} videoModel={videoModel} title={videoModel.title}></PlaylistItem>;
+				})}
 			</div>
 		);
 	}

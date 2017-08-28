@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "js-video-url-parser": "^0.2.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "0.9.5"
